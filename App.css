@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  position: relative;
+}
+
+/* Desktop Mode: Force wide viewport */
+.app.desktop-mode {
+  width: 100vw;
+  height: 100vh;
+  min-width: 1280px;
+}
+
+.app.desktop-mode .netflix-iframe {
+  width: 1280px;
+  height: 100vh;
+  transform: scale(0.8);
+  transform-origin: top left;
+  overflow: hidden;
+}
+
+/* Mobile Mode: Normal mobile viewport */
+.app.mobile-mode {
+  width: 100%;
+  height: 100%;
+}
+
+.app.mobile-mode .netflix-iframe {
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+}
+
+.netflix-iframe {
+  border: none;
+  display: block;
+  background: #fff;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top: 4px solid #e50914;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Error Container */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.error-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #e50914;
+}
+
+.error-container p {
+  font-size: 16px;
+  color: #999;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app.desktop-mode .netflix-iframe {
+    width: 100vw;
+    height: 100vh;
+    transform: scale(1);
+  }
+}
